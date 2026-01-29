@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume | NIT Calicut Student</title>
+    <!-- Same fonts for consistency -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- COPYING CORE STYLES FROM INDEX FOR CONSISTENCY --- */
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #161616;
+            --text-main: #e0e0e0;
+            --text-muted: #888888;
+            --accent: #64ffda; 
+            --accent-secondary: #bd93f9; 
+            --easing: cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; transition: color 0.3s; }
+
+        /* --- NAV (Identical to Home) --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { font-family: 'Fira Code', monospace; font-weight: 600; color: var(--text-main); font-size: 1.2rem; }
+        .logo span { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 30px; font-size: 0.9rem; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- RESUME SPECIFIC STYLES --- */
+        .resume-wrapper {
+            margin-top: 120px; /* Space for fixed nav */
+            margin-bottom: 100px;
+            animation: slideUp 0.8s var(--easing);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header Area */
+        .resume-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 30px;
+        }
+
+        .resume-name h1 { font-size: 3rem; font-weight: 800; line-height: 1; margin-bottom: 10px; }
+        .resume-name p { color: var(--accent); font-family: 'Fira Code', monospace; font-size: 1.1rem; }
+        
+        .resume-contact { text-align: right; font-size: 0.9rem; color: var(--text-muted); }
+        .resume-contact div { margin-bottom: 5px; }
+
+        .btn-download {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        .btn-download:hover { background: rgba(100, 255, 218, 0.1); }
+
+        /* Content Grid */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 50px;
+        }
+
+        .section-header {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .section-header::after { content: ""; flex: 1; height: 1px; background: #333; margin-left: 15px; }
+
+        /* Left Column (Education & Skills) */
+        .left-col h3 { font-size: 1rem; color: var(--text-main); margin-bottom: 5px; }
+        .left-col .sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
+        
+        .skill-tag {
+            display: inline-block;
+            background: #222;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+        .skill-tag:hover { color: var(--accent); background: #333; }
+        .skill-tag.creative:hover { color: var(--accent-secondary); }
+
+        /* Right Column (Experience) */
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 1px solid #333;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -4px;
+            top: 5px;
+            width: 7px;
+            height: 7px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .timeline-item.creative::before { background: var(--accent-secondary); }
+
+        .role { font-size: 1.2rem; font-weight: 600; color: var(--text-main); }
+        .company { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: var(--accent); margin-bottom: 10px; display: block;}
+        .duration { font-size: 0.8rem; color: var(--text-muted); float: right; }
+        
+        .details li {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            list-style-position: outside;
+            margin-left: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .resume-grid { grid-template-columns: 1fr; }
+            .resume-header { flex-direction: column; gap: 20px; }
+            .resume-contact { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="container nav-content">
+            <div class="logo"><span>NITC</span>.Dev</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <!-- Resume is active -->
+                <a href="resume.html" style="color: var(--accent);">Resume</a>
+                <a href="mailto:yourname@nitc.ac.in">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- RESUME CONTENT -->
+    <div class="container resume-wrapper">
+        
+        <!-- HEADER -->
+        <header class="resume-header">
+            <div class="resume-name">
+                <h1>Arun Krishna</h1>
+                <p>Loves solving challenges</p>
+            </div>
+            <div class="resume-contact">
+                <div>arunkrishna716@gmail.com</div>
+                <div>github.com/tsunderesenpai</div>
+                <div>linkedin.com/in/arun-krishna-61b2a1288/</div>
+                <a href="#" class="btn-download">Download PDF</a>
+            </div>
+        </header>
+
+        <div class="resume-grid">
+            
+            <!-- LEFT COLUMN -->
+            <aside class="left-col">
+                <h2 class="section-header">Education</h2>
+                
+                <h3>NIT Calicut</h3>
+                <div class="sub">B.Tech Computer Science</div>
+                <div class="sub">2023 - 2027 (Expected)</div>
+                <div class="sub">CGPA: 7.48 / 10.0</div>
+
+                <div style="height: 30px;"></div>
+
+                <h2 class="section-header">Skills</h2>
+                
+                <h3 style="font-size: 0.9rem; color: var(--accent);">Languages</h3>
+                <div style="margin-bottom: 15px;">
+                    <span class="skill-tag">C++ (STL)</span>
+                    <span class="skill-tag">C</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Java</span>
+                </div>
+
+                <h3 style="font-size: 0.9rem; color: var(--accent);">Core</h3>
+                <div style="margin-bottom: 15px;">
+                    <span class="skill-tag">DBMS Internals</span>
+                    <span class="skill-tag">OS Principles</span>
+                    <span class="skill-tag">Data Structures</span>
+                    <span class="skill-tag">Networks</span>
+                </div>
+
+                <h3 style="font-size: 0.9rem; color: var(--accent-secondary);">Creative</h3>
+                <div>
+                    <span class="skill-tag creative">After Effects</span>
+                    <span class="skill-tag creative">Premiere Pro</span>
+                    <span class="skill-tag creative">Motion Graphics</span>
+                    <span class="skill-tag creative">Generative Art</span>
+                </div>
+            </aside>
+
+            <!-- RIGHT COLUMN -->
+            <main class="right-col">
+                <h2 class="section-header">Projects & Experience</h2>
+
+                <!-- Project 1 -->
+                <div class="timeline-item">
+                    <span class="duration">2024 - 2025</span>
+                    <div class="role">NITCbase (RDBMS)</div>
+                    <span class="company">Systems Project</span>
+                    <ul class="details">
+                        <li>Architected a relational database management system from scratch using C++.</li>
+                        <li>Implemented Block Access Layer for disk I/O and Buffer Management layer (LRU replacement).</li>
+                        <li>Built B+ Tree indexing to optimize query retrieval speeds for large datasets.</li>
+                        <li>Designed a customized Algebra Layer to handle SQL-like commands.</li>
+                    </ul>
+                </div>
+
+
+                <!-- Creative Work -->
+                <div class="timeline-item creative">
+                    <span class="duration">Freelance</span>
+                    <div class="role">Motion Graphics Artist</div>
+                    <span class="company">Freelance / Club Work</span>
+                    <ul class="details">
+                        <li>Designed kinetic typography and motion posters for college technical fests (Tathva).</li>
+                        <li>Specialized in syncing complex visual motion to audio waveforms.</li>
+                    </ul>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio | NIT Calicut</title>
+    <!-- Fonts: Inter for UI, Fira Code for Tech vibes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- VARIABLES & RESET --- */
+      :root {
+        --bg-color: #0a0a0a;
+        --card-bg: #161616;
+        --text-main: #e0e0e0;
+        --text-muted: #888888;
+        --accent: #64ffda; /* Cyan for code */
+        --accent-secondary: #bd93f9; /* Purple for motion graphics */
+        --easing: cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        font-family: "Inter", sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s;
+      }
+      ul {
+        list-style: none;
+      }
+
+      /* --- LAYOUT UTILS --- */
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      section {
+        padding: 100px 0;
+      }
+
+      /* --- NAVIGATION --- */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 20px 0;
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(10px);
+        z-index: 100;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .nav-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-family: "Fira Code", monospace;
+        font-weight: 600;
+        color: var(--accent);
+        font-size: 1.2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        font-size: 0.9rem;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      /* --- HERO SECTION --- */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .hero-content h3 {
+        color: var(--accent);
+        font-family: "Fira Code", monospace;
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+
+      .hero-content h1 {
+        font-size: clamp(40px, 8vw, 80px);
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 10px;
+      }
+
+      .hero-content h2 {
+        font-size: clamp(30px, 5vw, 60px);
+        color: var(--text-muted);
+        font-weight: 600;
+        margin-bottom: 30px;
+      }
+
+      /* Typewriter Cursor */
+      .cursor {
+        display: inline-block;
+        width: 10px;
+        background-color: var(--accent-secondary);
+        animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .hero-desc {
+        max-width: 500px;
+        color: var(--text-muted);
+        margin-bottom: 50px;
+        font-size: 1.1rem;
+      }
+
+      .cta-btn {
+        padding: 15px 30px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        border-radius: 4px;
+        font-family: "Fira Code", monospace;
+        transition: all 0.3s var(--easing);
+      }
+
+      .cta-btn:hover {
+        background: rgba(100, 255, 218, 0.1);
+        transform: translateY(-3px);
+      }
+
+      /* --- SECTIONS (About, Skills, Projects) --- */
+      .section-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .section-title::after {
+        content: "";
+        display: block;
+        width: 200px;
+        height: 1px;
+        background: #333;
+        margin-left: 20px;
+      }
+
+      .section-title span {
+        color: var(--accent);
+        font-family: "Fira Code", monospace;
+        margin-right: 10px;
+      }
+
+      /* About Grid */
+      .about-content {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        gap: 50px;
+        align-items: flex-start;
+      }
+
+      .bio p {
+        margin-bottom: 15px;
+        color: var(--text-muted);
+      }
+
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .tech-item {
+        font-family: "Fira Code", monospace;
+        font-size: 0.85rem;
+        color: var(--text-main);
+      }
+
+      .tech-item::before {
+        content: "▹ ";
+        color: var(--accent);
+      }
+
+      /* --- NEW IMAGE STYLES --- */
+      .visual-side {
+        display: flex;
+        justify-content: center;
+        position: relative;
+      }
+
+      .profile-wrapper {
+        position: relative;
+        width: 280px; /* Adjust size here */
+        max-width: 100%;
+        border-radius: 4px;
+        transition: transform 0.3s var(--easing);
+      }
+
+      /* The offset border effect */
+      .profile-wrapper::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--accent);
+        border-radius: 4px;
+        top: 20px;
+        left: 20px;
+        z-index: -1;
+        transition: all 0.3s var(--easing);
+      }
+
+      .profile-img {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+        filter: grayscale(100%) contrast(1); /* Black and white initially */
+        transition: all 0.3s var(--easing);
+        background-color: #333; /* Fallback color */
+        display: block;
+      }
+
+      /* Hover Effects on Image */
+      .profile-wrapper:hover {
+        transform: translateY(-5px);
+      }
+
+      .profile-wrapper:hover .profile-img {
+        filter: none; /* Color on hover */
+      }
+
+      .profile-wrapper:hover::after {
+        top: 15px;
+        left: 15px; /* Moves the border closer */
+      }
+
+      /* Cards Style (Projects & Visuals) */
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: var(--card-bg);
+        padding: 30px;
+        border-radius: 8px;
+        transition:
+          transform 0.3s var(--easing),
+          box-shadow 0.3s var(--easing);
+        border: 1px solid transparent;
+      }
+
+      .card:hover {
+        transform: translateY(-7px);
+        border-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.7);
+      }
+
+      /* Specifically for Motion Graphics cards */
+      .card.creative:hover {
+        border-color: rgba(189, 147, 249, 0.3); /* Purple tint */
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .folder-icon {
+        width: 40px;
+        height: 40px;
+        color: var(--accent);
+      }
+      .motion-icon {
+        color: var(--accent-secondary);
+      }
+
+      .card-title {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .card-desc {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+      }
+
+      .card-tech {
+        display: flex;
+        gap: 15px;
+        font-family: "Fira Code", monospace;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      /* --- ANIMATION CLASSES (Scroll Reveal) --- */
+      .hidden {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s var(--easing);
+      }
+
+      .show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger delays */
+      .delay-1 {
+        transition-delay: 100ms;
+      }
+      .delay-2 {
+        transition-delay: 200ms;
+      }
+      .delay-3 {
+        transition-delay: 300ms;
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        text-align: center;
+        padding: 20px;
+        color: var(--text-muted);
+        font-family: "Fira Code", monospace;
+        font-size: 0.8rem;
+        margin-bottom: 20px;
+      }
+      
+
+      /* Mobile tweaks */
+      @media (max-width: 768px) {
+        .about-content {
+          grid-template-columns: 1fr;
+        }
+        .hero-content h1 {
+          font-size: 50px;
+        }
+        section {
+          padding: 60px 0;
+        }
+        .visual-side {
+          justify-content: flex-start;
+          margin-top: 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <div class="container nav-content">
+        <div class="logo">tsunderesenpai</div>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Work</a>
+          <a href="#visuals">Visuals</a>
+          <a href="resume.html" style="color: var(--accent)">Resume</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero container">
+      <div class="hero-content">
+        <h3 class="hidden delay-1">Hi, my name is</h3>
+        <h1 class="hidden delay-2">
+          <span id="typewriter"></span><span class="cursor">&nbsp;</span>
+        </h1>
+        <h2 class="hidden delay-3">I build systems & render dreams.</h2>
+        <p class="hero-desc hidden delay-3">
+          Pre-final year CSE student at <b>NIT Calicut</b>. I specialize in
+          low-level programming, database architecture, and clustering
+          algorithms, while crafting stunning motion graphics in After Effects
+          when the code compiles.
+        </p>
+        <a href="#projects" class="cta-btn hidden delay-3">Check out my code</a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="container hidden">
+      <h2 class="section-title"><span>01.</span> About Me</h2>
+      <div class="about-content">
+        <div class="bio">
+          <p>
+            Hello! I'm a computer science enthusiast based in Calicut. My
+            interest in computers started with gaming, but quickly evolved into
+            wondering <i>"how does this engine work?"</i> and
+            <i>"how do these pixels move?"</i>.
+          </p>
+          <p>
+            Currently, I'm diving deep into
+            <span class="highlight">Software Engineering</span> and
+            <span class="highlight">Database Internals</span>. I enjoy the
+            challenge of
+            <span class="bold-highlight">C++ memory management</span>
+            and the hurdles in building
+            <span class="bold-highlight">production-ready software</span>. When
+            I step away from the terminal, I open
+            <span class="ae">Adobe After Effects</span>
+            to visualize abstract concepts.
+          </p>
+          
+          <p>Here are a few technologies I've been working with recently:</p>
+          <ul class="tech-stack">
+            <li class="tech-item">C / C++</li>
+            <li class="tech-item">SQL & DB Internals</li>
+            <li class="tech-item">Python (Clustering)</li>
+            <li class="tech-item">After Effects</li>
+            <li class="tech-item">OpenGL</li>
+            <li class="tech-item">Git</li>
+          </ul>
+        </div>
+        
+        <!-- PHOTO PLACEHOLDER SECTION -->
+        <div class="visual-side">
+            <div class="profile-wrapper">
+                <!-- Replace 'placeholder.jpg' with your photo file path -->
+                <!-- Example: src="assets/me.jpg" -->
+                <img src="/8989.jpg" alt="Arun Krishna" class="profile-img">
+            </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="container hidden">
+      <h2 class="section-title"><span>02.</span> Technical Projects</h2>
+      <div class="grid-3">
+        <!-- FEATURED PROJECT: NITCbase -->
+        <div class="card">
+          <div class="card-header">
+            <svg
+              class="folder-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+              ></path>
+            </svg>
+            <a href="#" style="color: var(--text-main)"
+              ><svg
+                style="width: 20px"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                ></path></svg
+            ></a>
+          </div>
+          <h3 class="card-title">NITCbase</h3>
+          <p class="card-desc">
+            A relational database management system built from scratch.
+            Implemented B+ Tree indexing, Buffer Management, and a Disk
+            Interface to handle SQL queries efficiently.
+          </p>
+          <ul class="card-tech">
+            <li>C++</li>
+            <li>RDBMS</li>
+            <li>Data Structures</li>
+          </ul>
+        </div>
+
+       
+
+        <!-- Other Project -->
+        <div class="card">
+          <div class="card-header">
+            <svg
+              class="folder-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="card-title">Faculty Appointment System</h3>
+          <p class="card-desc">
+           An android app for faculties to manage appointment scheduling. Built using flutter and springboot.
+          </p>
+          <ul class="card-tech">
+            <li>Flutter</li>
+            <li>Springboot</li>
+            <li>PostgreSQL</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISUALS / CREATIVE -->
+    <section id="visuals" class="container hidden">
+      <h2 class="section-title"><span>03.</span> Motion & Visuals</h2>
+      <div class="grid-3">
+        <div class="card creative">
+          <div class="card-header">
+            <svg
+              class="folder-icon motion-icon"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="card-title">Kinetic Typography</h3>
+          <p class="card-desc">
+            Experimental text animation exploring velocity and ease-curves.
+            Syncing type to fast-paced electronic beats.
+          </p>
+          <ul class="card-tech">
+            <li style="color: var(--accent-secondary)">After Effects</li>
+            <li style="color: var(--accent-secondary)">Expressions</li>
+          </ul>
+        </div>
+
+       
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section
+      id="contact"
+      class="container hidden"
+      style="text-align: center; max-width: 600px"
+    >
+      <h2
+        class="section-title"
+        style="
+          justify-content: center;
+          margin-bottom: 20px;
+          font-size: 1rem;
+          color: var(--accent);
+        "
+      >
+        <span>04.</span> What's Next?
+      </h2>
+      <h1 style="font-size: 3rem; margin-bottom: 20px; font-weight: 700">
+        Get In Touch
+      </h1>
+      <p style="color: var(--text-muted); margin-bottom: 40px">
+        Whether you have a question about C++, need a motion graphic, or just
+        want to say hi, my inbox is always open.
+      </p>
+      <a href="mailto:arunkrishna716@gmail.com" class="cta-btn">Say Hello</a>
+    </section>
+
+    <footer>
+      <p>Built with C-Style Logic & After Effects Love.</p>
+      <p>NIT Calicut &copy; 2024</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+      // 1. Typewriter Effect
+      const textToType = "Arun Krishna."; // CHANGE THIS TO YOUR ACTUAL NAME
+      const typeWriterElement = document.getElementById("typewriter");
+      let i = 0;
+
+      function type() {
+        if (i < textToType.length) {
+          typeWriterElement.innerHTML += textToType.charAt(i);
+          i++;
+          setTimeout(type, 100); // Speed of typing
+        }
+      }
+
+      // Start typing after a short delay
+      setTimeout(type, 1200);
+
+      // 2. Scroll Reveal Animation using Intersection Observer
+      const observerOptions = {
+        threshold: 0.2, // Trigger when 20% of the element is visible
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target); // Only animate once
+          }
+        });
+      }, observerOptions);
+
+      // Target all elements with class 'hidden'
+      const hiddenElements = document.querySelectorAll(".hidden");
+      hiddenElements.forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
